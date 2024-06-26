@@ -5,6 +5,7 @@ class Solution {
         int i=0,j=0, count=0;
         while(j<l){
             map.put(fruits[j], map.getOrDefault(fruits[j],0)+1);
+             j++;
             if(map.size()<=2){
                 count= Math.max(count,j-i+1);
             }
@@ -14,8 +15,7 @@ class Solution {
                     map.remove(fruits[i]);
                 i++;
             }
-            j++;
         }
-        return count;
+        return count-1;
     }
 }
