@@ -15,7 +15,7 @@ class Solution {
         int ans=0;
         while(e<nums.length){
             sum+=nums[e];
-            while(sum>k&&s<nums.length){
+            while(sum>k){
             sum-=nums[s];
                 s++;
             }
