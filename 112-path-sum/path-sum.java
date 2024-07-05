@@ -22,28 +22,14 @@ class Solution {
          if(root==null) return false;
 
          sum+=root.val;
-         if(root.left==null && root.right==null){
-            return sum==targetSum;
-         }
          
+         if(root.left==null && root.right==null){
+            return (sum==targetSum);
+         }
 
         boolean left=solve(root.left,targetSum,sum);
         boolean  right=solve(root.right,targetSum,sum);
 
         return left||right;
-    //  return solve(root, targetSum, 0);
-    // }
-
-    // public boolean solve(TreeNode root, int targetSum, int sum) {
-    //     if (root == null) {
-    //         return false;
-    //     }
-    //     sum += root.val;
-    //     if (root.left == null && root.right == null) {
-    //         return sum == targetSum;
-    //     }
-    //     boolean left = solve(root.left, targetSum, sum);
-    //     boolean right = solve(root.right, targetSum, sum);
-    //     return left || right;
     }
 }
