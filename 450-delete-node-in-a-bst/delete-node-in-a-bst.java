@@ -18,15 +18,11 @@ class Solution {
         if (root == null) return null;
 
         if (root.val == key) {
-            // Case 1: Node with only one child or no child
             if (root.left == null) return root.right;
             if (root.right == null) return root.left;
-
-            // Case 2: Node with two children
-            // Find the in-order successor (smallest in the right subtree)
             TreeNode minNode = findMin(root.right);
-            root.val = minNode.val;  // Replace the value with the successor's value
-            root.right = deleteNode(root.right, minNode.val);  // Delete the successor
+            root.val = minNode.val;  
+            root.right = deleteNode(root.right, minNode.val); 
         } else if (root.val > key) {
             root.left = deleteNode(root.left, key);
         } else {
