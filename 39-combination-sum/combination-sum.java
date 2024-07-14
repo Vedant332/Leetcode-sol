@@ -6,12 +6,10 @@ class Solution {
     }
 
     public void helper(int[] candidates,int target,int ind,List<List<Integer>> ans,List<Integer> res){
-        if(target==0){
-            ans.add(new ArrayList(res));
-            return;
-        }
-
         if(ind==candidates.length){
+            if(target==0){
+            ans.add(new ArrayList(res));
+        }
             return;
         }
 
