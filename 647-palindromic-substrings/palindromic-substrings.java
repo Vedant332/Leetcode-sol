@@ -1,7 +1,7 @@
     class Solution {
             public int countSubstrings(String s) {
             int count=0;
-            Boolean[][] dp=new Boolean[s.length()][s.length()];
+            boolean[][] dp=new boolean[s.length()][s.length()];
 
             for(int i=0;i<s.length();i++){
                 for(int j=i;j<s.length();j++){
@@ -13,17 +13,16 @@
             return count;
    }
 
-     public boolean isPalindrome(String s, int start, int end, Boolean[][] dp) {
-        if (start >= end) return true;
+    public boolean isPalindrome(String s, int start,int end,boolean[][] dp){
+        if(start>=end) return true;
 
-        if (dp[start][end] != null) return dp[start][end];
+        if (dp[start][end] == true) return dp[start][end];
+       if(s.charAt(start)==s.charAt(end)){
+         dp[start][end] = isPalindrome(s, start + 1, end - 1, dp);
+       }else{
+        dp[start][end]=false;
+       }
 
-        if (s.charAt(start) == s.charAt(end)) {
-            dp[start][end] = isPalindrome(s, start + 1, end - 1, dp);
-        } else {
-            dp[start][end] = false;
-        }
-
-        return dp[start][end];
+       return dp[start][end];
     }
 }
