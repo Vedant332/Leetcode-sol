@@ -1,10 +1,11 @@
     class Solution {
             public int countSubstrings(String s) {
             int count=0;
+            Boolean[][] dp=new Boolean[s.length()][s.length()];
 
             for(int i=0;i<s.length();i++){
                 for(int j=i;j<s.length();j++){
-                    if(isPalindrome(s,i,j)){
+                    if(isPalindrome(s,i,j,dp)){
                         count++;
                     }
                }
@@ -12,13 +13,17 @@
             return count;
    }
 
-    public boolean isPalindrome(String s, int start,int end){
-        if(start>=end) return true;
+     public boolean isPalindrome(String s, int start, int end, Boolean[][] dp) {
+        if (start >= end) return true;
 
-       if(s.charAt(start)==s.charAt(end)){
-          return isPalindrome(s,start+1,end-1);
-       }
+        if (dp[start][end] != null) return dp[start][end];
 
-       return false;
+        if (s.charAt(start) == s.charAt(end)) {
+            dp[start][end] = isPalindrome(s, start + 1, end - 1, dp);
+        } else {
+            dp[start][end] = false;
+        }
+
+        return dp[start][end];
     }
 }
