@@ -1,8 +1,19 @@
 class Solution {
     public int numDecodings(String s) {
-        int[] dp=new int[s.length()];
+        int[] dp=new int[s.length()+1];
         Arrays.fill(dp,-1);
-        return solve(s,0,dp);
+
+        dp[s.length()]=1;
+        for(int j=s.length()-1;j>=0;j--){
+            int count=0;
+        for(int i=j;i<Math.min(j + 2, s.length());i++){
+            if(isValid(s.substring(j,i+1))){
+                count+=solve(s,i+1,dp);
+            }
+        }
+         dp[j]=count;
+        }
+        return dp[0];
     }
 
     public int solve(String s,int ind,int[] dp){
