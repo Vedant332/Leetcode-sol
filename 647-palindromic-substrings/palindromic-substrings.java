@@ -18,11 +18,10 @@
 
         if (dp[start][end] == true) return dp[start][end];
        if(s.charAt(start)==s.charAt(end)){
-         dp[start][end] = isPalindrome(s, start + 1, end - 1, dp);
-       }else{
-        dp[start][end]=false;
+        return  dp[start][end] = isPalindrome(s, start + 1, end - 1, dp);
        }
+       
 
-       return dp[start][end];
+       return dp[start][end]=false;
     }
 }
