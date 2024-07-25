@@ -2,12 +2,24 @@ class Solution {
     public int coinChange(int[] coins, int amount) {
        int n = coins.length;
          int[][] dp = new int[n][amount + 1];
-        for (int row[] : dp)
-            Arrays.fill(row, -1);
-        int ans = solve(coins,coins.length-1,amount,dp);
-        if (ans >= (int) Math.pow(10, 9))
-            return -1;
-        return ans;
+        for(int i=0;i<amount+1;i++){
+           if (i % coins[0] == 0)
+                dp[0][i]=i / coins[0];
+            else
+                dp[0][i]=(int) Math.pow(10, 9);
+        }
+        for(int ind=1;ind<n;ind++){
+            for(int j=0;j<amount+1;j++){
+                int take= (int) Math.pow(10, 9);
+        if(coins[ind]<=j){
+            take=1+dp[ind][j-coins[ind]];
+        }
+        int notTake=dp[ind-1][j];
+
+         dp[ind][j]=Math.min(take,notTake);
+            }
+        }
+        return dp[n - 1][amount] >= (int) Math.pow(10, 9) ? -1 : dp[n - 1][amount];
     }
 
      public int solve(int[] coins,int ind,int amount,int[][] dp){
