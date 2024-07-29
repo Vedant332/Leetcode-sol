@@ -11,7 +11,17 @@ class Solution {
         int[] dp=new int[maxi+1];
         Arrays.fill(dp,-1);
 
-        return helper(freq,0,dp);
+        dp[0]=0;
+        dp[1]=freq[1];
+
+        for(int i=2;i<freq.length;i++){
+            int take=freq[i]*i+dp[i-2];
+        int notTake=dp[i-1];
+
+         dp[i]=Math.max(take,notTake);
+        }
+
+        return dp[maxi];
     }
 
     public int helper(int[] freq,int ind,int[] dp){
