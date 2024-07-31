@@ -1,10 +1,18 @@
 class Solution {
     public int maxUncrossedLines(int[] nums1, int[] nums2) {
         int[][] dp=new int[nums1.length+1][nums2.length+1];
-        for(int[] row : dp){
-            Arrays.fill(row,-1);
+        dp[nums1.length][nums2.length]=0;
+
+        for(int ind1=nums1.length-1;ind1>=0;ind1--){
+            for(int ind2=nums2.length-1;ind2>=0;ind2--){
+                 if(nums1[ind1]==nums2[ind2]){
+                 dp[ind1][ind2]=1+dp[ind1+1][ind2+1];
+        }else{
+                 dp[ind1][ind2]=Math.max(dp[ind1+1][ind2],dp[ind1][ind2+1]);
         }
-        return helper(nums1,nums2,0,0,dp);
+            }
+        }
+        return dp[0][0];
     }
 
     public int helper(int[] nums1,int[] nums2,int ind1,int ind2,int[][] dp){
