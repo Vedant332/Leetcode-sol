@@ -11,11 +11,10 @@ class Solution {
             return 0;
         }
 
-        // if(ind<n){
             int one=ind*(helper(n,currSum+ind,ind,numTaken+1));
 
             int two=helper(n,currSum,ind+1,numTaken);
             return Math.max(one, two);
-        // }
+    
     }
 }
