@@ -17,7 +17,7 @@ class Solution {
         }
 
         for(int ind=scores.length-1;ind>=0;ind--){
-            for(int prev=scores.length-1;prev>=-1;prev--){
+            for(int prev=ind-1;prev>=-1;prev--){
                 int take=0;
         if(prev==-1 || arr[ind][0]>=arr[prev][0]){
              take=arr[ind][0]+dp[ind+1][ind+1];
