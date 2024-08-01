@@ -12,9 +12,23 @@ class Solution {
          for (int[] row : dp) {
             Arrays.fill(row, -1);
         }
+        for (int i = 0; i <= scores.length; i++) {
+            dp[scores.length][i] = 0;
+        }
 
+        for(int ind=scores.length-1;ind>=0;ind--){
+            for(int prev=scores.length-1;prev>=-1;prev--){
+                int take=0;
+        if(prev==-1 || arr[ind][0]>=arr[prev][0]){
+             take=arr[ind][0]+dp[ind+1][ind+1];
+        }
+        int notTake=dp[ind+1][prev+1];
 
-        return helper(arr,0,-1,dp);
+         dp[ind][prev+1]=Math.max(take,notTake);
+            }
+        }
+
+        return dp[0][-1+1];
     }
 
     public int helper(int[][] arr,int ind,int prev,int[][] dp){
