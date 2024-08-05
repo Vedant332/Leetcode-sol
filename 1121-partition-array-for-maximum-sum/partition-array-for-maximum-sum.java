@@ -20,19 +20,19 @@ class Solution {
         return dp[0];
     }
 
-    public int func(int[] arr,int k, int ind,int[] dp){
-        if(ind>=arr.length) return 0;
+    // public int func(int[] arr,int k, int ind,int[] dp){
+    //     if(ind>=arr.length) return 0;
 
-         if (dp[ind] != -1) return dp[ind];
+    //      if (dp[ind] != -1) return dp[ind];
 
-        int sum=0;
-        int maxSum=0;
-        int maxEle=Integer.MIN_VALUE;
-        for(int i=0;i<Math.min(k,arr.length-ind);i++){
-            maxEle=Math.max(maxEle,arr[ind+i]);
-            sum=maxEle*(i+1) + func(arr,k,ind+i+1,dp);
-            maxSum=Math.max(sum,maxSum);
-        }
-        return dp[ind]=maxSum;
-    }
+    //     int sum=0;
+    //     int maxSum=0;
+    //     int maxEle=Integer.MIN_VALUE;
+    //     for(int i=0;i<Math.min(k,arr.length-ind);i++){
+    //         maxEle=Math.max(maxEle,arr[ind+i]);
+    //         sum=maxEle*(i+1) + func(arr,k,ind+i+1,dp);
+    //         maxSum=Math.max(sum,maxSum);
+    //     }
+    //     return dp[ind]=maxSum;
+    // }
 }
