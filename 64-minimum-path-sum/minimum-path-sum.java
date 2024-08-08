@@ -3,10 +3,27 @@ class Solution {
         int m=grid.length;
         int n=grid[0].length;
         int[][] dp=new int[m][n];
-        for(int[] row : dp) {
-            Arrays.fill(row,-1);
+
+        
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(i==0 && j==0){
+                    dp[0][0]=grid[0][0];
+                }else{
+                    int up = grid[i][j];
+                    if(i>0) up+=dp[i - 1][j];
+                    else up+=9999;
+
+                    int left = grid[i][j];
+                    if(j>0) left+=dp[i][j - 1];
+                    else left+=9999;
+                    dp[i][j] =   Math.min(up, left);
+                }
+            }
         }
-        return helper(grid,m-1,n-1,dp);
+        
+        return dp[m-1][n-1];
     }
 
     public int helper(int[][] arr,int i,int j,int[][] dp){
