@@ -3,14 +3,25 @@ class Solution {
         int size=strs.length;
         int[][][] dp=new int[size+1][m+1][n+1];
 
-        for (int i = 0; i <= strs.length; i++) {
-            for (int j = 0; j <= m; j++) {
-                for (int k = 0; k <= n; k++) {
-                    dp[i][j][k] = -1;
+        for(int ind=size-1;ind>=0;ind--){
+            for(int zeros=0;zeros<m+1;zeros++){
+                for(int ones=0;ones<n+1;ones++){
+                    String st=strs[ind];
+                    int one=findOnes(st);
+                    int zero=st.length()-one;
+
+                    int notTake=dp[ind+1][zeros][ones];
+                    int take=Integer.MIN_VALUE;
+                    if(zeros>=zero && ones>= one){
+                        take=1+dp[ind+1][zeros-zero][ones-one];
+                    }
+
+                    dp[ind][zeros][ones]=Math.max(take,notTake);
                 }
             }
         }
-        return helper(strs,m,n,0,dp);
+
+        return dp[0][m][n];
     }
 
     public int helper(String[] strs,int m, int n,int ind,int[][][] dp){
