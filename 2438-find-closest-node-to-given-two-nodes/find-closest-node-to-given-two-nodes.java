@@ -1,41 +1,53 @@
 class Solution {
     public int closestMeetingNode(int[] edges, int node1, int node2) {
-        int n=edges.length;
-        int[] dist1=new int[n];
-        int[] dist2=new int[n];
-        Arrays.fill(dist1,Integer.MAX_VALUE);
-        Arrays.fill(dist2,Integer.MAX_VALUE);
+       int n = edges.length;
 
-        bfs(edges,node1,dist1);
-        bfs(edges,node2,dist2);
+        int[] dist1 = dijkstra(edges, node1, n);
+        int[] dist2 = dijkstra(edges, node2, n);
 
-        int minNode=-1;
-        int min=Integer.MAX_VALUE;
-        for(int i=0;i<n;i++){
-            if(dist1[i]!=Integer.MAX_VALUE && dist2[i]!=Integer.MAX_VALUE ){
-                int maxi=Math.max(dist1[i],dist2[i]);
-                if(maxi<min){
-                    min=maxi;
-                    minNode=i;
+        int minDistance = Integer.MAX_VALUE;
+        int minNode = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (dist1[i] != Integer.MAX_VALUE && dist2[i] != Integer.MAX_VALUE) {
+                int maxDist = Math.max(dist1[i], dist2[i]);
+                if (maxDist < minDistance) {
+                    minDistance = maxDist;
+                    minNode = i;
                 }
             }
         }
+
         return minNode;
     }
 
-    public void bfs(int[] edges,int node,int[] dist){
-        Queue<Integer> q=new LinkedList<>();
-        q.offer(node);
-        dist[node]=0;
+    private int[] dijkstra(int[] edges, int startNode, int n) {
+        int[] dist = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[startNode] = 0;
 
-        while(!q.isEmpty()){
-            int ele=q.peek();
-            q.poll();
-            int adjEle=edges[ele];
-            if(adjEle!=-1 && dist[adjEle]==Integer.MAX_VALUE){
-                dist[adjEle]=1+dist[ele];
-                q.offer(adjEle);
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        pq.offer(new int[]{startNode, 0});
+
+        while (!pq.isEmpty()) {
+            int[] nodeInfo = pq.poll();
+            int node = nodeInfo[0];
+            int currDist = nodeInfo[1];
+
+            if (currDist > dist[node]) {
+                continue;
+            }
+
+            int neighbor = edges[node];
+            if (neighbor != -1) {
+                int newDist = currDist + 1; 
+                if (newDist < dist[neighbor]) {
+                    dist[neighbor] = newDist;
+                    pq.offer(new int[]{neighbor, newDist});
+                }
             }
         }
+
+        return dist;
     }
 }
