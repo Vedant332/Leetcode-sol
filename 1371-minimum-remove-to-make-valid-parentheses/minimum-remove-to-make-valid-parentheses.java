@@ -1,8 +1,7 @@
 class Solution {
     public String minRemoveToMakeValid(String s) {
-        int count=0;
         char[] arr=s.toCharArray();
-
+        int count=0;
         for(int i=0;i<arr.length;i++){
             if(arr[i]=='('){
                 count++;
@@ -13,11 +12,12 @@ class Solution {
         }
 
         for(int i=arr.length-1;i>=0;i--){
-            if(arr[i]=='(' && count>0){
-                arr[i]='*';
+            if(arr[i]=='('){
+                if(count>0) arr[i]='*';
                 count--;
             }
         }
+
         StringBuilder sb=new StringBuilder();
         for(int i=0;i<arr.length;i++){
             if(arr[i]!='*') sb.append(arr[i]);
