@@ -11,21 +11,23 @@ class Solution {
         map.put('7',"pqrs");
         map.put('8',"tuv");
         map.put('9',"wxyz");
-
-        helper(digits,0,map,new StringBuilder(),ans);
+        helper(0,digits,map,ans,new StringBuilder());
         return ans;
     }
 
-    public void helper(String digits,int ind,HashMap<Character,String> map,StringBuilder sb, List<String> ans){
+    public void helper(int ind,String digits,HashMap<Character,String> map,List<String> ans,StringBuilder sb){
         if(ind==digits.length()){
             ans.add(sb.toString());
             return;
         }
-        String str=map.get(digits.charAt(ind));
-        for(int i=0;i<str.length();i++){
-            sb.append(str.charAt(i));
-            helper(digits,ind+1,map,sb,ans);
+
+        String temp=map.get(digits.charAt(ind));
+
+        for(int i=0;i<temp.length();i++){
+            sb.append(temp.charAt(i));
+            helper(ind+1,digits,map,ans,sb);
             sb.deleteCharAt(sb.length()-1);
         }
+
     }
 }
