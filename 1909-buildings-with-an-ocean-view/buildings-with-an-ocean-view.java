@@ -5,7 +5,7 @@ class Solution {
         st.push(n-1);
         int index=n-2;
         while(index>=0){
-            if(!st.isEmpty() && heights[index]>heights[st.peek()]  ){
+            if(heights[index]>heights[st.peek()]  ){
                 st.push(index);
             }
             index--;
