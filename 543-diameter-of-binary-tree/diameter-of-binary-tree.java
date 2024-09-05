@@ -17,18 +17,18 @@ class Solution {
     public int diameterOfBinaryTree(TreeNode root) {
         int[] maxi=new int[1];
         maxi[0]=Integer.MIN_VALUE;
-        helper(root,maxi);
+        func(root,maxi);
         return maxi[0];
     }
-    public int helper(TreeNode root,int[] maxi){
+
+    public int func(TreeNode root,int[] maxi){
         if(root==null) return 0;
 
-        int left=helper(root.left,maxi);
-        int right=helper(root.right,maxi);
+        int left=func(root.left,maxi);
+        int right=func(root.right,maxi);
 
         maxi[0]=Math.max(maxi[0],left+right);
 
         return 1+Math.max(left,right);
-
     }
 }
