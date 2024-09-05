@@ -7,26 +7,23 @@ class Solution {
 
         while(lo<=hi){
             int mid=lo+(hi-lo)/2;
-            
-             if (nums[mid] == target) {
-                left = mid;
-                right = mid;
-                
-                // Expand to the left and right to find the actual bounds
-                while (left > 0 && nums[left - 1] == target) {
+
+            if(nums[mid]==target){
+                left=mid;
+                right=mid;
+                while(left>0 && nums[mid]==nums[left-1]){
                     left--;
                 }
-                while (right < nums.length - 1 && nums[right + 1] == target) {
+                while(right<nums.length-1 && nums[mid]==nums[right+1]){
                     right++;
                 }
-                return new int[] {left, right};
-
-            }else if(nums[mid]>target){
-                hi=mid-1;
-            }else{
+                return new int[]{left,right};
+            }else if(nums[mid]<target){
                 lo=mid+1;
+            }else{
+                hi=mid-1;
             }
         }
-        return new int[] {-1,-1};
+        return new int[]{-1,-1};
     }
 }
