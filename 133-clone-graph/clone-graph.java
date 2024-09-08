@@ -21,17 +21,17 @@ class Node {
 class Solution {
     public Node cloneGraph(Node node) {
         if(node==null) return null;
-     HashMap<Node,Node> map=new HashMap<>();
-     return cloneUtils(node,map);   
+        HashMap<Node,Node> map =new HashMap<>();
+        return cloneUtil(node,map);
     }
 
-    public Node cloneUtils(Node node ,HashMap<Node,Node> map){
+    public Node cloneUtil(Node node, HashMap<Node,Node> map){
         Node newNode=new Node(node.val);
         map.put(node,newNode);
 
-        for( Node it : node.neighbors){
+        for(Node it : node.neighbors){
             if(!map.containsKey(it)){
-                newNode.neighbors.add(cloneUtils(it,map));
+                newNode.neighbors.add(cloneUtil(it,map));
             }else{
                 newNode.neighbors.add(map.get(it));
             }
