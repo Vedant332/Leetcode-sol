@@ -5,10 +5,8 @@ class Solution {
 
         while(lo<=hi){
             long mid=lo+(hi-lo)/2;
-            long sq=mid*mid;
-
-            if( sq== x) return (int)mid;
-            else if(sq < x) lo=mid+1;
+            if(mid*mid==x) return (int)mid;
+            else if(mid*mid<x) lo=mid+1;
             else hi=mid-1;
         }
         return (int)hi;
