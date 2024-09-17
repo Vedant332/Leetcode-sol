@@ -1,16 +1,24 @@
 class Solution {
-         Map<String, Boolean> map = new HashMap<>();
     public boolean wordBreak(String s, List<String> wordDict) {
-        if(wordDict.contains(s))    return true;
-        if(map.containsKey(s))  return map.get(s);
-        for(int i=1 ; i<= s.length(); i++){
-            String left = s.substring(0, i);
-            if(wordDict.contains(left) && wordBreak(s.substring(i), wordDict)){
-                map.put(s, true);
-                return true;
+        HashMap<String,Boolean> map= new HashMap<>();
+        Boolean[] dp=new Boolean[s.length()+1];
+        for(String it : wordDict){
+            map.put(it,true);
+        }
+
+        return func(s,0,map,dp);
+    }
+
+    public boolean func(String s,int ind,HashMap<String,Boolean> map,Boolean[] dp){
+        if(ind==s.length()) return true;
+        if(dp[ind]!=null) return dp[ind];
+        for(int i=ind+1;i<=s.length();i++){
+            if(map.containsKey(s.substring(ind,i))){
+                if(func(s,i,map,dp)){
+                    return dp[i]=true;
+                }
             }
         }
-        map.put(s,false); 
-        return false;
+        return dp[ind]=false;
     }
 }
