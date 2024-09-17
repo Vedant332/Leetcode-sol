@@ -15,7 +15,7 @@ class Solution {
         for(int i=ind+1;i<=s.length();i++){
             if(map.containsKey(s.substring(ind,i))){
                 if(func(s,i,map,dp)){
-                    return dp[i]=true;
+                    return dp[ind]=true;
                 }
             }
         }
