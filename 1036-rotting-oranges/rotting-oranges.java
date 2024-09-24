@@ -1,55 +1,59 @@
-class tuple{
-    int r;
-    int c;
-    int t;
-    public tuple(int r ,int c ,int t){
-        this.r=r;
-        this.c=c;
-        this.t=t;
+class Pair{
+    int row;
+    int col;
+    int time;
+    public Pair(int row,int col,int time){
+        this.row=row;
+        this.col=col;
+        this.time=time;
     }
 }
 class Solution {
     public int orangesRotting(int[][] grid) {
         int m=grid.length;
         int n=grid[0].length;
-        int[][] vis=new int[m][n];
-        Queue<tuple> q=new LinkedList<>();
-        int fresh=0;
+        
+        int[][] visited=new int[m][n];
+        Queue<Pair> q=new LinkedList<>();
+
+        int cntFrsh=0;
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(grid[i][j]==2){
-                    q.add(new tuple(i,j,0));
-                    vis[i][j]=2;
-                }else{
-                    vis[i][j]=0;
-                }
-                if(grid[i][j]==1){
-                    fresh++;
+                    q.offer(new Pair(i,j,0));
+                    visited[i][j]=1;
+                }else if(grid[i][j]==1){
+                    cntFrsh++;
                 }
             }
         }
-        int[] dx={-1,0,1,0};
-        int[] dy={0,1,0,-1};
-        int tm=0;
-        int cnt=0;
-        while(!q.isEmpty()){
-            int r1=q.peek().r;
-            int c1=q.peek().c;
-            int t=q.peek().t;
-            tm=Math.max(tm,t);
-            q.remove();
-            for(int i=0;i<4;i++){
-                int nrow=r1+dx[i];
-                int ncol=c1+dy[i];
-                if(nrow>=0 && nrow<m && ncol>=0 && ncol<n && vis[nrow][ncol]!=2 && grid[nrow][ncol]==1){
-                    q.add(new tuple(nrow,ncol,t+1));
-                    vis[nrow][ncol]=2;
-                    cnt++;
-                }
-            }
-        }
-        if(cnt!=fresh) return -1;
 
-        return tm;
+        int ct=0;
+        int minTm=Integer.MIN_VALUE;
+
+        while(!q.isEmpty()){
+            int r=q.peek().row;
+            int c=q.peek().col;
+            int t=q.peek().time;
+            q.poll();
+
+            minTm=Math.max(minTm,t);
+
+            int[] dx={-1,0,1,0};
+            int[] dy={0,1,0,-1};
+
+            for(int i=0;i<4;i++){
+                int nrow=r+dx[i];
+                int ncol=c+dy[i];
+
+                if(nrow>=0 && nrow<m && ncol>=0 && ncol<n && visited[nrow][ncol]==0 && grid[nrow][ncol]==1){
+                    q.offer(new Pair(nrow,ncol,t+1));
+                    visited[nrow][ncol]=1;
+                    ct++;
+                }
+            }
+        }
+        if(cntFrsh!=ct) return -1;
+        else return (minTm==Integer.MIN_VALUE)?0:minTm ;
     }
 }
