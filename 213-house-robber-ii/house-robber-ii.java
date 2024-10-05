@@ -1,29 +1,33 @@
 class Solution {
     public int rob(int[] nums) {
-        if(nums.length==1) return nums[0];
-        int[] dp1 = new int[nums.length];
-        int[] dp2 = new int[nums.length];
+        int n=nums.length;
+        if(n==1) return nums[0];
+        ArrayList<Integer> left=new ArrayList<>();
+        ArrayList<Integer> right=new ArrayList<>();
 
-        ArrayList<Integer> arr1=new ArrayList<>();
-        ArrayList<Integer> arr2=new ArrayList<>();
-        
-       for(int i=0;i<nums.length;i++){
-        if(i!=0) arr1.add(nums[i]);
-        if(i!=nums.length-1) arr2.add(nums[i]);
-       }
-        return Math.max(func2(arr1,dp1),func2(arr2,dp2));
+        for(int i=0;i<n;i++){
+            if(i!=0) right.add(nums[i]);
+            if(i!=n-1) left.add(nums[i]);
+        }
+
+        int[] dp1=new int[n];
+        int[] dp2=new int[n];
+        Arrays.fill(dp1,-1);
+        Arrays.fill(dp2,-1);
+
+        return Math.max(func(left,left.size()-1,dp1),func(right,right.size()-1,dp2));
     }
 
-   
-    public int func2( ArrayList<Integer> arr,int[] dp){
-        dp[0]=arr.get(0);
+    public int func(ArrayList<Integer> arr,int ind,int[] dp){
+        if(ind==0) return arr.get(ind);
 
-        for(int i=1;i<arr.size();i++){
-            int take=arr.get(i);
-            if(i!=1) take+=dp[i-2];
-            int notTake=dp[i-1];
-            dp[i]=Math.max(take,notTake);
+        if(dp[ind]!=-1) return dp[ind];
+        int notTake=func(arr,ind-1,dp);
+        int take=arr.get(ind);
+        if(ind-2>=0){
+            take+=func(arr,ind-2,dp);
         }
-        return dp[arr.size()-1];
+
+        return dp[ind]=Math.max(take,notTake);
     }
 }
