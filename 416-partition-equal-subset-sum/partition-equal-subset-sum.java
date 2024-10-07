@@ -1,47 +1,29 @@
 class Solution {
     public boolean canPartition(int[] nums) {
-        int totalSum = 0;
-        for (int num : nums) {
-            totalSum += num;
+        int totSum=0;
+        for(int i=0;i<nums.length;i++){
+            totSum+=nums[i];
         }
+        if(totSum%2!=0) return false;
 
-        if (totalSum % 2 != 0) return false;
+        Boolean[][] dp=new Boolean[nums.length][totSum+1];
 
-        int sum = totalSum / 2;
-        boolean[][] dp = new boolean[nums.length + 1][sum + 1];
-
-        for (int i = 0; i <= nums.length; i++) {
-            dp[i][0] = true; 
-        }
-
-        for (int ind = 1; ind <= nums.length; ind++) {
-            for (int j = 1; j <= sum; j++) {
-                boolean notTake = dp[ind - 1][j];
-                boolean take = false;
-                if (j >= nums[ind - 1]) {
-                    take = dp[ind - 1][j - nums[ind - 1]];
-                }
-                dp[ind][j] = take || notTake;
-            }
-        }
-
-        return dp[nums.length][sum];
+        return helper(nums,nums.length-1,totSum/2,dp);
     }
 
-    public boolean helper(int[] nums,int sum,int ind,boolean[][] dp){
-        if(ind==nums.length){
-            if(sum==0) return true;
+    public boolean helper(int[] nums,int ind,int sum,Boolean[][] dp){
+        if(ind==0){
+            if(sum==nums[ind]) return true;
             else return false;
         }
 
-        if(dp[ind][sum]!=false) return dp[ind][sum];
-
+        if(sum==0) return true;
+        if(dp[ind][sum]!=null) return dp[ind][sum];
+        boolean notTake=helper(nums,ind-1,sum,dp);
         boolean take=false;
-        if(sum>=nums[ind]){
-            take=helper(nums,sum-nums[ind],ind+1,dp);
+        if(nums[ind]<=sum){
+            take=helper(nums,ind-1,sum-nums[ind],dp);
         }
-        boolean notTake=helper(nums,sum,ind+1,dp);
-
-        return dp[ind][sum]=take|notTake;
+        return dp[ind][sum]=take | notTake;
     }
 }
