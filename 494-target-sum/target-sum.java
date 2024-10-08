@@ -19,7 +19,7 @@ class Solution {
     }
     public static int helper(int[] arr,int sum,int ind,int[][] dp){
         if (ind == 0) {
-            if (sum == 0 && arr[0] == 0) return 2; // two subsets: {empty}, {0}
+            if (sum == 0 && arr[0] == 0) return 2; 
             if (sum == 0 || sum == arr[0]) return 1; 
             return 0;
         }
