@@ -1,12 +1,21 @@
 class Solution {
     public int maxProfit(int k, int[] prices) {
         int n=prices.length;
-        int[][] dp=new int[n][2*k];
-        for(int[] row : dp){
-            Arrays.fill(row,-1);
+        int[][] dp=new int[n+1][2*k+1];
+        
+        for(int ind=n-1;ind>=0;ind--){
+            for(int trans=2*k-1;trans>=0;trans--){
+                int profit=0;
+                if(trans%2==0){
+                    profit=Math.max(dp[ind+1][trans],-prices[ind]+dp[ind+1][trans+1]);
+                }else{
+                    profit=Math.max(dp[ind+1][trans],prices[ind]+dp[ind+1][trans+1]);
+                }
+                 dp[ind][trans]=profit;
+            }
         }
 
-        return func(0,0,k,prices,dp);
+        return dp[0][0];
     }
 
     public int func(int ind,int trans,int k,int[] prices,int[][] dp){
