@@ -1,20 +1,25 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int[][] dp=new int[prices.length][2];
+        int n=prices.length;
+        int[][] dp=new int[n+1][2];
         for(int[] row : dp){
             Arrays.fill(row,-1);
         }
-        return helper(prices,0,1,dp);
+
+        return func(0,0,prices,dp);
     }
 
-    public int helper(int[] prices,int ind,int cooldown,int[][] dp){
+    public int func(int ind,int buy,int[] prices,int[][] dp){
         if(ind>=prices.length) return 0;
 
-        if(dp[ind][cooldown]!=-1) return dp[ind][cooldown];
-        if(cooldown==1){
-            return dp[ind][cooldown]=Math.max(helper(prices,ind+1,1,dp),-prices[ind]+helper(prices,ind+1,0,dp));
+        if(dp[ind][buy]!= -1) return dp[ind][buy];
+        
+        int profit=0;
+        if(buy%2==0){
+            profit=Math.max(-prices[ind]+func(ind+1,1-buy,prices,dp),func(ind+1,buy,prices,dp));
         }else{
-            return dp[ind][cooldown]=Math.max(prices[ind]+helper(prices,ind+2,1,dp),helper(prices,ind+1,0,dp));
+            profit=Math.max(prices[ind]+func(ind+2,1-buy,prices,dp),func(ind+1,buy,prices,dp));
         }
+        return dp[ind][buy]=profit;
     }
 }
