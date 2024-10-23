@@ -1,13 +1,14 @@
 class Solution {
     public int longestStrChain(String[] words) {
-        int[] dp=new int[words.length];
+        int n=words.length;
+        Arrays.sort(words,(x,y)->x.length()-y.length());
+        int[] dp=new int[n];
         Arrays.fill(dp,1);
-        Arrays.sort(words, Comparator.comparingInt(String::length));
-        int maxi=Integer.MIN_VALUE;
-        for(int i=0;i<words.length;i++){
+        int maxi=0;
+        for(int i=0;i<n;i++){
             for(int j=0;j<i;j++){
-                if(compare(words[i],words[j])&& dp[j]+1>dp[i]){
-                    dp[i]=dp[j]+1;
+                if(compare(words[j],words[i],0,0) && dp[i]<1+dp[j]){
+                    dp[i]=1+dp[j];
                 }
             }
             maxi=Math.max(maxi,dp[i]);
@@ -15,19 +16,15 @@ class Solution {
         return maxi;
     }
 
-    public boolean compare(String i,String j){
-         if(i.length()!=j.length()+1) return false;
-        int first=0;
-        int second=0;
-        while(first!=i.length()){
-            if(second < j.length() && i.charAt(first) == j.charAt(second)){
-                first++;
-                second++;
-            }else{
-                first++;
+    public boolean compare(String s,String t,int i,int j){
+        if (t.length() - s.length() != 1) return false;
+        
+        while(j<t.length() && i<s.length()){
+            if(s.charAt(i)==t.charAt(j)){
+                i++;
             }
+            j++;
         }
-        if(first == i.length() && second == j.length()) return true;
-    else return false; 
+        return (i==s.length());
     }
 }
