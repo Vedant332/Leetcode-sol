@@ -8,10 +8,18 @@ class Solution {
         }
         Collections.sort(arr);
         int[][] dp=new int[cuts.length+2][cuts.length+2];
-        for(int[] row : dp){
-            Arrays.fill(row,-1);
+        
+        for(int i=cuts.length;i>=1;i--){
+            for(int j=i;j<=cuts.length;j++){
+                int minCost=Integer.MAX_VALUE;
+                for(int k=i;k<=j;k++){
+                    int cost=arr.get(j+1)-arr.get(i-1)+dp[i][k-1] +dp[k+1][j];
+                    minCost=Math.min(cost,minCost);
+                }
+                 dp[i][j]=minCost;
+            }
         }
-        return func(arr,1,cuts.length,dp);
+        return dp[1][cuts.length];
     }
 
     public int func(ArrayList<Integer> arr,int i,int j,int[][] dp){
