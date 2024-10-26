@@ -1,10 +1,21 @@
 class Solution {
     public int minCut(String s) {
         int n=s.length();
-        int[] dp=new int[n];
-            Arrays.fill(dp,-1);
+        int[] dp=new int[n+1];
+
+        for(int ind=n-1;ind>=0;ind--){
+            int minCost=Integer.MAX_VALUE;
+            for(int i=ind;i<n;i++){
+                if(isPalin(ind,i,s)){
+                    int cost=1+dp[i+1];
+                    minCost=Math.min(cost,minCost);
+                }
+            }
+             dp[ind]=minCost;
+        }
+            
         
-         return func(0,s,n,dp)-1;
+         return dp[0]-1;
     }
     public int func(int ind,String s,int n,int[] dp){
         if(ind==n) return 0;
