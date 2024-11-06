@@ -10,7 +10,7 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        PriorityQueue<ListNode> pq=new PriorityQueue<>((x,y)-> x.val-y.val);
+        PriorityQueue<ListNode> pq=new PriorityQueue<>((x,y)->x.val-y.val);
 
         for(ListNode it : lists){
             while(it!=null){
@@ -18,11 +18,12 @@ class Solution {
                 it=it.next;
             }
         }
+
         ListNode dummy=new ListNode(0);
         ListNode temp=dummy;
+
         while(!pq.isEmpty()){
-            ListNode res=pq.poll();
-            temp.next=res;
+            temp.next=pq.poll();
             temp=temp.next;
         }
         temp.next=null;
