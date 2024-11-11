@@ -4,7 +4,6 @@ class Solution {
         int j=0;
         int maxLen=0;
         HashMap<Character,Integer> map=new HashMap<>();
-
         while(j<s.length()){
             map.put(s.charAt(j),map.getOrDefault(s.charAt(j),0)+1);
 
