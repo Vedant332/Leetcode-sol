@@ -9,7 +9,6 @@ class Solution {
 
             if(map.size()==j-i+1){
                 maxLen=Math.max(maxLen,j-i+1);
-                j++;
             }else if(map.size()<j-i+1){
                 while(map.size()<j-i+1){
                     map.put(s.charAt(i),map.get(s.charAt(i))-1);
@@ -18,8 +17,8 @@ class Solution {
                     }
                     i++;
                 }
-                j++;
             }
+            j++;
         }
         return maxLen;
     }
