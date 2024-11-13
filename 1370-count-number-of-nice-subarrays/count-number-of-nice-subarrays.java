@@ -1,23 +1,19 @@
 class Solution {
     public int numberOfSubarrays(int[] nums, int k) {
-        return func(nums,k)-func(nums,k-1);
-    }
+        HashMap<Integer,Integer> map=new HashMap<>();
 
-    public int func(int[] nums,int goal){
-        int i=0;
-        int j=0;
+        map.put(0,1);
         int sum=0;
         int count=0;
 
-        while(j<nums.length){
-            sum+=(nums[j]%2);
+        for(int i=0;i<nums.length;i++){
+            sum+=(nums[i]%2);
 
-            while(goal<sum){
-                sum-=(nums[i]%2);
-                i++;
+            int rem=sum-k;
+            if(map.containsKey(rem)){
+                count+=map.get(rem);
             }
-            count+=j-i+1;
-            j++;
+            map.put(sum,map.getOrDefault(sum,0)+1);
         }
         return count;
     }
