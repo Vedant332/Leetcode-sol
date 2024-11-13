@@ -1,26 +1,18 @@
 class Solution {
     public int numSubarraysWithSum(int[] nums, int goal) {
-        return func(nums,goal)-func(nums,goal-1);
-
-    }
-
-    public int func(int[] nums,int goal){
-        if(goal<0) return 0;
-        int n=nums.length;
-        int i=0;
-        int j=0;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        map.put(0,1);
         int sum=0;
         int count=0;
 
-        while(j<nums.length){
-            sum+=nums[j];
+        for(int i=0;i<nums.length;i++){
+            sum+=nums[i];
 
-            while(goal<sum){
-                sum-=nums[i];
-                i++;
-            }
-            count+=j-i+1;
-            j++;
+            int rem=sum-goal;
+            if(map.containsKey(rem)){
+                count+=map.get(rem);
+            } 
+            map.put(sum,map.getOrDefault(sum,0)+1);
         }
         return count;
     }
