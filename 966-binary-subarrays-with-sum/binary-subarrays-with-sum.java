@@ -1,29 +1,27 @@
 class Solution {
-    public int numSubarraysWithSum(int[] nums, int goal) {    
-       int x=solve(nums,goal);
-       int y=solve(nums,goal-1);
-       return x-y;
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return func(nums,goal)-func(nums,goal-1);
+
     }
 
-     public int solve(int []nums, int k){
-        if(k<0){
-            return 0;
-        }
-        int s=0;
-        int e=0;
+    public int func(int[] nums,int goal){
+        if(goal<0) return 0;
+        int n=nums.length;
+        int i=0;
+        int j=0;
         int sum=0;
-        int ans=0;
-        while(e<nums.length){
-            sum+=nums[e];
-            while(sum>k){
-            sum-=nums[s];
-                s++;
+        int count=0;
+
+        while(j<nums.length){
+            sum+=nums[j];
+
+            while(goal<sum){
+                sum-=nums[i];
+                i++;
             }
-            if(sum<=k){
-                ans+=e-s+1;
-                }
-            e++;
+            count+=j-i+1;
+            j++;
         }
-        return ans;
+        return count;
     }
 }
