@@ -24,10 +24,9 @@ class Solution {
         int splitRibbon=0;
         for(int i=0;i<ribbons.length;i++){
             int NosplitRibbon=ribbons[i]/mid;
-            if(NosplitRibbon>0){
                 splitRibbon+= NosplitRibbon;
                 if(splitRibbon>=k) return true;
-            }
+            
         }
             return false;
     }
