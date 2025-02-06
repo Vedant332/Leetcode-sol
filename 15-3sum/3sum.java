@@ -9,20 +9,19 @@ class Solution {
             int k=nums.length-1;
 
             while(j<k){
-                int sum=nums[i]+nums[j]+nums[k];
-                if(sum<0){
+                if(nums[i]+nums[j]+nums[k]<0){
                     j++;
-                }else if(sum>0){
+                }else if(nums[i]+nums[j]+nums[k]>0){
                     k--;
                 }else{
-                    List<Integer> list=new ArrayList<>();
-                    list.add(nums[i]);
-                    list.add(nums[j]);
-                    list.add(nums[k]);
-                    ans.add(list);
+                    List<Integer> temp=new ArrayList<>();
+                    temp.add(nums[i]);
+                    temp.add(nums[j]);
+                    temp.add(nums[k]);
+                    ans.add(temp);
                     j++;
                     k--;
-                    while(j<k && nums[j]==nums[j-1]){
+                     while(j<k && nums[j]==nums[j-1]){
                         j++;
                     }
                     while(j<k && nums[k]==nums[k+1]){
@@ -30,7 +29,7 @@ class Solution {
                     }
                 }
             }
-        } 
+        }
         return ans;
     }
 }
