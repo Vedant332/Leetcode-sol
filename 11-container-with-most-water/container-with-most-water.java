@@ -5,13 +5,13 @@ class Solution {
         int area=0;
         int maxArea=Integer.MIN_VALUE;
         while(i<j){
-            area=(j-i) * Math.min(height[i],height[j]);
+            area=(j-i)* Math.min(height[i],height[j]);
+            maxArea=Math.max(area,maxArea);
             if(height[i]<height[j]){
                 i++;
             }else{
                 j--;
             }
-            maxArea=Math.max(maxArea,area);
         }
         return maxArea;
     }
