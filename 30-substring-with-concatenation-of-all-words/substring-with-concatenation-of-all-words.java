@@ -3,7 +3,6 @@ class Solution {
          List<Integer> ans = new ArrayList<>();
         HashMap<String, Integer> map = new HashMap<>();
         
-        // Check if all words are the same, if so, concatenate them into one word
         Set<String> uniqueWords = new HashSet<>(Arrays.asList(words));
         if (uniqueWords.size() == 1) {
             words = new String[]{String.join("", words)};
