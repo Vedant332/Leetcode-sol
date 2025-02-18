@@ -5,10 +5,10 @@ class Solution {
         for(String it : arr){
             if(!st.isEmpty() && it.equals("..")){
                 st.pop();
-            }else if(!it.equals(".") && !it.equals("..") &&!it.equals("")){
+            }else if(!it.equals(".") && !it.equals("..") && !it.equals("")){
                 st.push(it);
             }
         }
-        return "/"+ String.join("/",st);
+        return "/" + String.join("/",st);
     }
 }
