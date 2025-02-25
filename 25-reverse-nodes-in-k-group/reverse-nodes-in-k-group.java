@@ -11,20 +11,20 @@ class Solution {
                 break;
             }
 
-            nextNode = kthNode.next;  // Store the next segment
-            kthNode.next = null;      // Disconnect the segment to reverse
+            nextNode = kthNode.next;  
+            kthNode.next = null;      
 
-            ListNode newHead = rev(temp);  // Reverse the segment
+            ListNode newHead = rev(temp);  
 
             if (temp == head) {
-                head = newHead;  // Update head for the first segment
+                head = newHead;  
             } else {
-                prevNode.next = newHead;  // Connect previous reversed segment
+                prevNode.next = newHead;  
             }
 
-            temp.next = nextNode;  // Link last node of reversed segment to next part
-            prevNode = temp;       // Update previous node for next iteration
-            temp = nextNode;       // Move temp forward
+            temp.next = nextNode;  
+            prevNode = temp;       
+            temp = nextNode;       
         }
 
         return head;
@@ -50,6 +50,6 @@ class Solution {
             curr = next;
         }
 
-        return prev;  // New head of reversed segment
+        return prev;  
     }
 }
