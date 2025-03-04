@@ -15,17 +15,19 @@
  */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> ds =new ArrayList<>();
-        helper(root,ds,0);
-        return ds;
+        List<Integer> ans=new ArrayList<>();
+        func(root,ans,0);
+        return ans;
     }
-
-    public void helper(TreeNode root,List<Integer> ds,int count){
+    public void func(TreeNode root,List<Integer> ans,int level){
         if(root==null) return;
 
-        if(ds.size()== count)ds.add(root.val);
-        count++;
-        helper(root.right,ds,count);
-        helper(root.left,ds,count);
+        if(ans.size()==level){
+            ans.add(root.val);
+        }
+        
+        func(root.right,ans,level+1);
+        func(root.left,ans,level+1);
+
     }
 }
