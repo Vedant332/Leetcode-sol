@@ -20,20 +20,20 @@ class Node {
 
 class Solution {
     public Node cloneGraph(Node node) {
-        if(node==null) return null;
-        HashMap<Node,Node> map =new HashMap<>();
-        return cloneUtil(node,map);
+        HashMap<Node,Node> map=new HashMap<>();
+        return func(node,map);
     }
 
-    public Node cloneUtil(Node node, HashMap<Node,Node> map){
+    public Node func(Node node,HashMap<Node,Node> map){
+        if(node==null) return null;
         Node newNode=new Node(node.val);
         map.put(node,newNode);
 
-        for(Node it : node.neighbors){
-            if(!map.containsKey(it)){
-                newNode.neighbors.add(cloneUtil(it,map));
+        for(Node neighbor : node.neighbors){
+            if(!map.containsKey(neighbor)){
+                newNode.neighbors.add(func(neighbor,map));
             }else{
-                newNode.neighbors.add(map.get(it));
+                newNode.neighbors.add(map.get(neighbor));
             }
         }
         return newNode;
