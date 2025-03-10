@@ -23,8 +23,9 @@ class Solution {
 
             if(gene.equals(endGene)) return noOfSteps;
 
-            char[] charArray=gene.toCharArray();
-            for(int i=0;i<charArray.length;i++){
+
+            for(int i=0;i<gene.length();i++){
+                char[] charArray=gene.toCharArray();
                 char originalChar=charArray[i];
                 for(int j=0;j<arr.length;j++){
                     if(arr[j]==originalChar) continue;
@@ -34,7 +35,6 @@ class Solution {
                         hs.remove(newWord);
                         q.offer(new Pair(newWord,noOfSteps+1));
                     }
-                    charArray[i] = originalChar;   
                 }
             }
         }
