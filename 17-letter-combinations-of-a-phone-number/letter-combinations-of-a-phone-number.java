@@ -1,8 +1,8 @@
 class Solution {
     public List<String> letterCombinations(String digits) {
         List<String> ans=new ArrayList<>();
-        if(digits.length()==0) return ans;
         HashMap<Character,String> map=new HashMap<>();
+        if(digits.length()==0) return ans;
         map.put('2',"abc");
         map.put('3',"def");
         map.put('4',"ghi");
@@ -14,13 +14,11 @@ class Solution {
         helper(0,digits,map,ans,new StringBuilder());
         return ans;
     }
-
     public void helper(int ind,String digits,HashMap<Character,String> map,List<String> ans,StringBuilder sb){
-        if(ind==digits.length()){
+        if(digits.length()==ind){
             ans.add(sb.toString());
             return;
         }
-
         String temp=map.get(digits.charAt(ind));
 
         for(int i=0;i<temp.length();i++){
@@ -28,6 +26,5 @@ class Solution {
             helper(ind+1,digits,map,ans,sb);
             sb.deleteCharAt(sb.length()-1);
         }
-
     }
 }
