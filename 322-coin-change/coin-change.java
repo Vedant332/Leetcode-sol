@@ -1,10 +1,25 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
         int[][] dp=new int[coins.length][amount+1];
-        for(int[] row : dp){
-            Arrays.fill(row,-1);
+        
+        for(int am=0;am<=amount;am++){
+            if(am%coins[0]==0){
+                dp[0][am]=am/coins[0];
+            }else{
+                dp[0][am]=(int) Math.pow(10, 9);
+            }
         }
-         int ans=func(coins,coins.length-1,amount,dp);
+
+        for(int ind=1;ind<coins.length;ind++){
+            for(int am=0;am<=amount;am++){
+                int notTake=dp[ind-1][am];
+                int take=Integer.MAX_VALUE;
+                if(coins[ind]<=am) take=1+dp[ind][am-coins[ind]];
+
+                dp[ind][am]=Math.min(take,notTake);
+            }
+        }
+         int ans=dp[coins.length-1][amount];
          if (ans >= (int) Math.pow(10, 9))
             return -1;
         return ans;
