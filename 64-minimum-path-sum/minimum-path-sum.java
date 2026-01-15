@@ -1,36 +1,25 @@
 class Solution {
     public int minPathSum(int[][] grid) {
-        int m=grid.length;
-        int n=grid[0].length;
-        int[][] dp= new int[m][n];
-        
-
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(i==0 && j==0) dp[i][j]=grid[i][j];
-                else{
-                    int up=0;
-                    int left=0;
-                    if(i>0) up=grid[i][j]+dp[i-1][j];
-                    else up=(int) 1e9;
-                    if(j>0) left=grid[i][j]+dp[i][j-1];
-                    else left=(int) 1e9;
-
-                    dp[i][j]=Math.min(up,left);
-                }
-            }
+        int[][] dp=new int[grid.length][grid[0].length];
+        for(int[] row : dp){
+            Arrays.fill(row,-1);
         }
-        return dp[m-1][n-1];
+        return helper(grid,grid.length-1,grid[0].length-1,dp);
     }
 
-    public int func(int i,int j, int[][] grid,int[][] dp){
-        if(i==0 && j==0) return grid[i][j];
-        if(i<0 || j<0) return (int) 1e9;
+    public int helper(int[][] grid,int m,int n,int[][] dp){
+        if(m==0 && n==0){
+            return grid[m][n];
+        }
 
-        if(dp[i][j]!=-1) return dp[i][j];
-        int up=grid[i][j]+func(i-1,j,grid,dp);
-        int left=grid[i][j]+func(i,j-1,grid,dp);
+        if(m<0 || n<0) return (int) 1e9;
 
-        return dp[i][j]=Math.min(up,left);
+        if(dp[m][n]!=-1) return dp[m][n];
+
+        int up=grid[m][n]+helper(grid,m-1,n,dp);
+        int left=grid[m][n]+helper(grid,m,n-1,dp);
+
+        return dp[m][n]=Math.min(up,left);
+
     }
 }
