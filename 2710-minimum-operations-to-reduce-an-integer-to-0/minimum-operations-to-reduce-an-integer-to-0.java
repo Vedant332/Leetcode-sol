@@ -1,21 +1,23 @@
 class Solution {
     public int minOperations(int n) {
-        int count=0;
-
+        int steps=0;
+        
         while(n>0){
-            count++;
 
-            double c = Math.log(n)/Math.log(2);
+            int hi=1;
+            int nexthi=1;
 
-            int prevPow= (int) Math.pow(2,(int)c);
-            int nextPow=(int) Math.pow(2,(int) c+1);
+            while(hi<n){
+                nexthi=hi;
+                hi=hi*2;        
+            }
 
-            int diff1=n-prevPow;
-            int diff2=nextPow-n;
+            int diff1= Math.abs(hi-n);
+            int diff2=Math.abs(nexthi-n);
 
-            if(diff1 < diff2) n = diff1;
-         else n = diff2;
+            n=Math.min(diff1,diff2);
+            steps++;
         }
-        return count;
+        return steps;
     }
 }
