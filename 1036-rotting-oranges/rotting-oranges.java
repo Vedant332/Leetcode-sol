@@ -11,48 +11,52 @@ class Pair{
 
 class Solution {
     public int orangesRotting(int[][] grid) {
-        int m=grid.length;
-        int n=grid[0].length;
+         int m = grid.length;
+        int n = grid[0].length;
 
-        Queue<Pair> q=new LinkedList<>();
-        int[][] vis=new int[m][n];
-        int cntFresh=0;
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(grid[i][j]==2){
-                    vis[i][j]=1;
-                    q.offer(new Pair(i,j,0));
-                }else if(grid[i][j]==1){
-                    cntFresh++;
+        Queue<Pair> q = new LinkedList<>();
+        int[][] vis = new int[m][n];
+
+        int fresh = 0;
+
+        // Step 1: push all initially rotten oranges
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    q.offer(new Pair(i, j, 0));
+                    vis[i][j] = 1;
+                } else if (grid[i][j] == 1) {
+                    fresh++;
                 }
             }
         }
 
-        int cnt=0;
-        int minTm=Integer.MIN_VALUE;
+        int time = 0;
+        int rottenCount = 0;
 
-        while(!q.isEmpty()){
-            int r=q.peek().row;
-            int c=q.peek().col;
-            int t=q.peek().time;
-            q.poll();
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
 
-            minTm=Math.max(minTm,t);
+        
+        while (!q.isEmpty()) {
+            Pair cur = q.poll();
+            time = cur.time; 
 
-            int[] dx={-1,0,1,0};
-            int[] dy={0,1,0,-1};
-            for(int i=0;i<4;i++){
-                int nrow=r+dx[i];
-                int ncol=c+dy[i];
-                if(nrow>=0 && nrow<m && ncol>=0 && ncol<n && grid[nrow][ncol]==1 && vis[nrow][ncol]!=1){
-                    q.offer(new Pair(nrow,ncol,t+1));
-                    cnt++;
-                    vis[nrow][ncol]=1;
+            for (int i = 0; i < 4; i++) {
+                int nr = cur.row + dx[i];
+                int nc = cur.col + dy[i];
+
+                if (nr >= 0 && nr < m && nc >= 0 && nc < n &&
+                    grid[nr][nc] == 1 && vis[nr][nc] == 0) {
+
+                    vis[nr][nc] = 1;
+                    rottenCount++;
+                    q.offer(new Pair(nr, nc, cur.time + 1));
                 }
             }
         }
+        if (rottenCount != fresh) return -1;
 
-        if(cnt!=cntFresh) return -1;
-        else return (minTm==Integer.MIN_VALUE)?0:minTm ;
+        return time;
     }
 }
