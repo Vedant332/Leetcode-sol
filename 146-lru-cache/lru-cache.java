@@ -56,6 +56,8 @@ class LRUCache {
         Node afterNode=node.next;
         prevNode.next=afterNode;
         afterNode.prev=prevNode;
+        node.prev = null;
+node.next = null;
     }
 
     public void insertAthead(Node node){
