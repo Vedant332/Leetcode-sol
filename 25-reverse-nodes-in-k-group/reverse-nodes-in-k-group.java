@@ -31,7 +31,7 @@ class Solution {
     }
 
     private ListNode findKth(ListNode node, int k) {
-        while (node != null && k > 1) {
+        while (node != null && k-1 > 0) {
             node = node.next;
             k--;
         }
