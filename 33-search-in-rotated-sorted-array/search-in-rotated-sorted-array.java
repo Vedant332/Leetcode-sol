@@ -8,13 +8,13 @@ class Solution {
 
             if(nums[mid]==target) return mid;
             else if(nums[mid]>=nums[lo]){
-                if(nums[lo]<=target && nums[mid]>=target){
+                if(nums[lo]<=target && target <nums[mid]){
                     hi=mid-1;
                 }else{
                     lo=mid+1;
                 }
             }else{
-                if(nums[mid]<=target && target<=nums[hi]){
+                if(nums[mid]<target && target<=nums[hi]){
                     lo=mid+1;
                 }else{
                     hi=mid-1;
