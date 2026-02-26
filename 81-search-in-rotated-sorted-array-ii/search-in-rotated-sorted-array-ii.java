@@ -4,12 +4,15 @@ class Solution {
         int hi=nums.length-1;
 
         while(lo<=hi){
-            int mid=lo+(hi-lo)/2; 
+            int mid=lo+(hi-lo)/2;
+
+            
 
             if(nums[mid]==target) return true;
-            else if(nums[lo]==nums[mid] && nums[mid]==nums[hi]){
+            if(nums[lo]==nums[mid] && nums[mid]==nums[hi]){
                 lo++;
                 hi--;
+                continue;
             }
             else if(nums[mid]>=nums[lo]){
                 if(nums[lo]<=target && target <nums[mid]){
