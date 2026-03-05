@@ -1,29 +1,33 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int lo=1;
-        int hi=0;
+        int max=1;
         for(int i=0;i<piles.length;i++){
-            hi=Math.max(hi,piles[i]);
+            max=Math.max(piles[i],max);
         }
+
+        int lo=1;
+        int hi=max;
+        int ans=max;
 
         while(lo<=hi){
             int mid=lo+(hi-lo)/2;
-            int hrs=isValid(mid,piles);
 
-            if(hrs>h){
-                lo=mid+1;
-            }else{
+            if(func(piles,mid)<=h){
+                ans=mid;
                 hi=mid-1;
+            }else{
+                lo=mid+1;
             }
         }
-        return lo;
+        return ans;
     }
 
-    public int isValid(int k,int[] piles){
-       int totalTime=0;
-        for(int i=0;i<piles.length;i++){
-            totalTime+=Math.ceil((double)piles[i]/(double)k);
+    public long func(int[] nums, long k){
+        long totalhrs=0;
+
+        for(int i=0;i<nums.length;i++){
+            totalhrs+=(nums[i] + k - 1)/k;
         }
-        return totalTime;
+        return totalhrs;
     }
-} 
+}
