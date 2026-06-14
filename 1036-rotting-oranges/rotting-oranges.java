@@ -1,62 +1,58 @@
 class Pair{
     int row;
     int col;
-    int time;
-    public Pair(int row,int col,int time){
+    public Pair(int row, int col){
         this.row=row;
         this.col=col;
-        this.time=time;
     }
 }
-
 class Solution {
     public int orangesRotting(int[][] grid) {
-         int m = grid.length;
-        int n = grid[0].length;
+        int n=grid.length;
+        int m=grid[0].length;
+        int[][] vis =new int[n][m];
+        int freshCount=0;
 
-        Queue<Pair> q = new LinkedList<>();
-        int[][] vis = new int[m][n];
-
-        int fresh = 0;
-
-        // Step 1: push all initially rotten oranges
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 2) {
-                    q.offer(new Pair(i, j, 0));
-                    vis[i][j] = 1;
-                } else if (grid[i][j] == 1) {
-                    fresh++;
+        Queue<Pair> q=new LinkedList<>();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==2){
+                    q.offer(new Pair(i,j));
+                }else if(grid[i][j]==1){
+                    freshCount++;
                 }
             }
         }
 
-        int time = 0;
-        int rottenCount = 0;
+        if (freshCount == 0) return 0;
 
-        int[] dx = {-1, 0, 1, 0};
-        int[] dy = {0, 1, 0, -1};
+        int rotCount=0;
+        int tm=0;
+        while(!q.isEmpty()){
+            int size=q.size();
+            boolean rotted = false;
 
-        
-        while (!q.isEmpty()) {
-            Pair cur = q.poll();
-            time = cur.time; 
+            for(int i=0;i<size;i++){
+                int r=q.peek().row;
+                 int c=q.peek().col;  
+                 q.poll();
 
-            for (int i = 0; i < 4; i++) {
-                int nr = cur.row + dx[i];
-                int nc = cur.col + dy[i];
-
-                if (nr >= 0 && nr < m && nc >= 0 && nc < n &&
-                    grid[nr][nc] == 1 && vis[nr][nc] == 0) {
-
-                    vis[nr][nc] = 1;
-                    rottenCount++;
-                    q.offer(new Pair(nr, nc, cur.time + 1));
-                }
+                    int[] dx={0,-1,0,1};
+                    int[] dy={-1,0,1,0};
+                    for(int j=0;j<4;j++){
+                        int nrow=dx[j]+r;
+                        int ncol=dy[j]+c;
+                        if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]==1 && vis[nrow][ncol]==0){
+                            vis[nrow][ncol]=1;
+                            q.offer(new Pair(nrow,ncol));
+                            rotCount++;
+                            rotted = true;
+                        }
+                  }
             }
+            if(rotted) tm++;
         }
-        if (rottenCount != fresh) return -1;
-
-        return time;
+        if(rotCount!=freshCount) return -1;
+        return tm;
     }
 }
