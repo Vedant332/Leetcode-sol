@@ -1,0 +1,1 @@
+<h2>count-rotations-with-exactly-k-equal-adjacent-pairs Notes</h2><hr>[ Time taken: 6d 17hrs 6m 9s ]
