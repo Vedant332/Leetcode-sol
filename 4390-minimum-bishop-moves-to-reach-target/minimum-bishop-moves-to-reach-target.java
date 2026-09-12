@@ -30,14 +30,10 @@ class Solution {
                 while(nrow>= 1 && nrow<9 && ncol>=1 && ncol<9){
                     if(dist[nrow][ncol]>1+dist[r][c]){
                         dist[nrow][ncol]=1+dist[r][c];
-                    }else{
+                          q.offer(new Pair(nrow,ncol));
+                    }
                         nrow+=dx[i];
                         ncol+=dy[i];
-                        continue;
-                    }
-                    q.offer(new Pair(nrow,ncol));
-                    nrow+=dx[i];
-                    ncol+=dy[i];
                 }
             }
         }
