@@ -9,8 +9,8 @@ class Solution {
                 if(map.get(s.charAt(l))==0) map.remove(s.charAt(l));
                 l++;
             }
-            map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
             maxLen=Math.max(maxLen,i-l+1);
+            map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
         }
         return maxLen;
     }
