@@ -2,41 +2,33 @@ class Solution {
     public boolean exist(char[][] board, String word) {
         int m=board.length;
         int n=board[0].length;
-        boolean vis[][]=new boolean[m][n];
-        for(int i=0;i<board.length;i++){
-            for(int j=0;j<board[0].length;j++){
-                if(word.charAt(0)==board[i][j]){
-                    if(dfs(0,i,j,board,word,vis,m,n)){
-                        return true;
-                    }
+        int[][] vis=new int[m][n];
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(vis[i][j]==0 && word.charAt(0)==board[i][j]){
+                    if(dfs(i,j,board,word,vis,m,n,0)) return true;
                 }
             }
         }
         return false;
     }
-
-    public boolean dfs(int ind,int row,int col,char[][] board,String word,boolean[][] vis,int m,int n){
-        if (ind == word.length()) {
-            return true;
-        }
-        if (row < 0 || row >= m || col < 0 || col >= n || vis[row][col] || board[row][col] != word.charAt(ind)) {
-            return false;
-        }
-
-        vis[row][col] = true;
-
-        int[] dx = {-1, 0, 1, 0};
-        int[] dy = {0, 1, 0, -1};
-
-        for (int i = 0; i < 4; i++) {
-            int nrow = row + dx[i];
-            int ncol = col + dy[i];
-            if (dfs(ind + 1, nrow, ncol, board, word, vis, m, n)) {
-                return true;
+    public boolean dfs(int row,int col,char[][] board,String word,int[][] vis,int m,int n,int wordInd){
+         vis[row][col]=1;  
+        wordInd++;
+        if(wordInd==word.length()) return true;
+        int[] dx={0,-1,0,1};
+        int[] dy={-1,0,1,0};
+        for(int i=0;i<4;i++){
+            int nrow=dx[i]+row;
+            int ncol=dy[i]+col;
+            if(nrow>=0 && nrow<m && ncol>=0 && ncol<n && vis[nrow][ncol]!=1 && board[nrow][ncol]==word.charAt(wordInd)){
+                if(dfs(nrow,ncol,board,word,vis,m,n,wordInd)){
+                    return true;
+                }
             }
         }
-
-        vis[row][col] = false;
+        vis[row][col] = 0;
         return false;
     }
 }
