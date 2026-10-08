@@ -5,13 +5,18 @@ class Solution {
         return ans;
     }
     public void helper(int ind,int[] candidates,List<Integer> temp,List<List<Integer>> ans,int target){
-        if (target < 0) return;
-        if (ind == candidates.length) {
-            if (target == 0) {
-                ans.add(new ArrayList<>(temp));
-            }
-            return;
-        } 
+        if (target == 0) {
+    ans.add(new ArrayList<>(temp));
+    return;
+}
+
+if (target < 0) {
+    return;
+}
+
+if (ind == candidates.length) {
+    return;
+}
 
         temp.add(candidates[ind]);
         helper(ind,candidates,temp,ans,target-candidates[ind]);
