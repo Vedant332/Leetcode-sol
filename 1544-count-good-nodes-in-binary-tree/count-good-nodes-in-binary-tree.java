@@ -15,20 +15,22 @@
  */
 class Solution {
     public int goodNodes(TreeNode root) {
-        int[] count=new int[1];
-        count[0]=0;
-       return func(root,count,Integer.MIN_VALUE);
+        return func(root,root.val);
     }
-    public int func(TreeNode root,int[] count,int max){
+
+    public int func(TreeNode root,int maxSoFar){
         if(root==null) return 0;
+        
+        int count=0;
 
-        max=Math.max(max,root.val);
-        if(max<=root.val){
-            count[0]++;
+        if(maxSoFar<=root.val){
+            count=1;
         }
-        func(root.left,count,max);
-        func(root.right,count,max);
+        maxSoFar=Math.max(maxSoFar,root.val);
 
-        return count[0];
+        int left=func(root.left,maxSoFar);
+        int right=func(root.right,maxSoFar);
+
+        return count+left+right;
     }
 }
