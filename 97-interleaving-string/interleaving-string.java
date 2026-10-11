@@ -1,39 +1,33 @@
 class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
-        if(s1.length()+s2.length()!=s3.length()) return false;
-        boolean[][] dp=new boolean[s1.length()+1][s2.length()+1];
-        dp[s1.length()][s2.length()]=true;
+        int n=s1.length();
+        int m=s2.length();
+        int l=s3.length();
 
-        for (int i = s1.length(); i >= 0; i--) {
-            for (int j = s2.length(); j >= 0; j--) {
-                if (i < s1.length() && s1.charAt(i) == s3.charAt(i + j)) {
-                    dp[i][j] = dp[i][j] || dp[i + 1][j];
-                }
-                if (j < s2.length() && s2.charAt(j) == s3.charAt(i + j)) {
-                    dp[i][j] = dp[i][j] || dp[i][j + 1];
-                }
-            }
-        }
+        if(n+m!=l) return false;
 
-        return dp[0][0];
+        Boolean[][] dp = new Boolean[n+1][m+1];  
+
+        return func(0,0,0,s1,s2,s3,n,m,l,dp);
     }
 
-    public boolean func(String s1, String s2, String s3,int i,int j,boolean[][] dp){
-        if(i==s1.length() && j==s2.length()) return true;
+    public boolean func(int i,int j,int k,String s1, String s2, String s3,
+                        int n,int m,int l,Boolean[][] dp){
 
-        if(dp[i][j]!=false) return dp[i][j];
+        if(i==n && j==m && k==l) return true;
 
-        if(i<s1.length() && s1.charAt(i)==s3.charAt(i+j)){
-            if(func(s1,s2,s3,i+1,j,dp)){
-                return dp[i][j]=true;
-            }
+        if(dp[i][j] != null) return dp[i][j];   
+
+        if(i < n && s1.charAt(i)==s3.charAt(k)){
+            if(func(i+1,j,k+1,s1,s2,s3,n,m,l,dp))
+                return dp[i][j] = true;
         }
 
-        if(j<s2.length() && s2.charAt(j)==s3.charAt(i+j)){
-            if(func(s1,s2,s3,i,j+1,dp)){
-                return dp[i][j]=true;
-            }
+        if(j < m && s2.charAt(j)==s3.charAt(k)){
+            if(func(i,j+1,k+1,s1,s2,s3,n,m,l,dp))
+                return dp[i][j] = true;
         }
-        return dp[i][j]=false;
+
+        return dp[i][j] = false;               
     }
 }
