@@ -1,40 +1,23 @@
 class Solution {
     public int numDecodings(String s) {
-        int[] dp=new int[s.length()+1];
+        int n=s.length();
+        int[] dp=new int[n];
         Arrays.fill(dp,-1);
-
-        dp[s.length()]=1;
-        for(int j=s.length()-1;j>=0;j--){
-            int count=0;
-        for(int i=j;i<Math.min(j + 2, s.length());i++){
-            if(isValid(s.substring(j,i+1))){
-                count+=solve(s,i+1,dp);
-            }
-        }
-         dp[j]=count;
-        }
-        return dp[0];
+        return func(0,s,n,dp);
     }
 
-    public int solve(String s,int ind,int[] dp){
-        if(ind==s.length()){
-            return 1;
-        }
-
-        if(dp[ind]!=-1)return dp[ind];
+    public int func(int ind, String s,int n,int[] dp){
+        if(ind == n) return 1;
 
         int count=0;
-        for(int i=ind;i<Math.min(ind + 2, s.length());i++){
-            if(isValid(s.substring(ind,i+1))){
-                count+=solve(s,i+1,dp);
+        if(dp[ind]!= -1) return dp[ind];
+        for(int i=ind;i<n && i <ind+2;i++){
+            String c=s.substring(ind,i+1);
+            int num=Integer.parseInt(c);
+            if(c.charAt(0)!='0' && num<=26){
+                count+=func(i+1,s,n,dp);
             }
         }
         return dp[ind]=count;
-    }
-
-    public boolean isValid(String s){
-        if(s.startsWith("0")) return false;
-        int num=Integer.parseInt(s);
-        return num>0 && num<=26;
     }
 }
