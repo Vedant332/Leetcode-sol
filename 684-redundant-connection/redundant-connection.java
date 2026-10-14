@@ -1,44 +1,55 @@
 class DisjointSet{
-    List<Integer> rank=new ArrayList<>();
-    List<Integer> parent=new ArrayList<>();
+    ArrayList<Integer> parent;
+    ArrayList<Integer> size;
+
     public DisjointSet(int n){
-        for(int i=0;i<n+1;i++){
-            rank.add(0);
+        parent=new ArrayList<>();
+        size=new ArrayList<>();
+        for(int i=0;i<n;i++){
             parent.add(i);
+            size.add(1);
         }
     }
 
-    public int findPar(int u){
-        if(parent.get(u)==u) return u;
-        int node=findPar(parent.get(u));
-        parent.set(u,node);
+    public int findUPar(int node){
+        if(parent.get(node)==node){
+            return node;
+        }
+
+        int ulp=findUPar(parent.get(node));
+        parent.set(node,ulp);
         return parent.get(node);
     }
 
-    public void unionByRank(int u,int v){
-        int ulp=findPar(u);
-        int vlp=findPar(v);
-        if(rank.get(ulp)<rank.get(vlp)){
-            parent.set(ulp,vlp);
-        }else if(rank.get(vlp)<rank.get(ulp)){
-            parent.set(vlp,ulp);
-        }else{
-            parent.set(vlp,ulp);
-            int rankU=rank.get(ulp);
-            rank.set(ulp,rankU+1);
-        }
+    public void unionBySize(int u,int v){
+        int ulp_v=findUPar(v);
+        int ulp_u=findUPar(u);
+        if(ulp_v==ulp_u) return;
+        if(size.get(ulp_v) > size.get(ulp_u)) {
+        parent.set(ulp_u, ulp_v);
+        size.set(ulp_v, size.get(ulp_u) + size.get(ulp_v));
+    } else {
+        parent.set(ulp_v, ulp_u);
+        size.set(ulp_u, size.get(ulp_u) + size.get(ulp_v));
+    }
     }
 }
 class Solution {
     public int[] findRedundantConnection(int[][] edges) {
-        DisjointSet ds=new DisjointSet(edges.length);       
+       int n = edges.length;
+DisjointSet ds = new DisjointSet(n + 1);
+ int[] ans=new int[2];
+
         for(int i=0;i<edges.length;i++){
-            if(ds.findPar(edges[i][0])!=ds.findPar(edges[i][1])){
-            ds.unionByRank(edges[i][0],edges[i][1]);
-        }else{
-            return new int[] {edges[i][0],edges[i][1]};
+            int u=edges[i][0];
+            int v=edges[i][1];
+            if(ds.findUPar(u)==ds.findUPar(v)){
+                ans[0]=u;
+                ans[1]=v;
+            }else{
+                ds.unionBySize(u,v);
+            }
         }
-        }
-         return new int[]{};
+        return ans;
     }
 }
