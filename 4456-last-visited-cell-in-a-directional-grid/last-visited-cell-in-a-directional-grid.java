@@ -23,12 +23,10 @@ class Solution {
                 j=j-1;
             }
 
-            if(i < 0 || i >= m || j < 0 || j >= n){
+            if(i < 0 || i >= m || j < 0 || j >= n|| vis[i][j]==true){
                 break;
             }
-            if(vis[i][j]==true){
-                break;
-            }
+            
             vis[i][j]=true;
         }
         return ans;
